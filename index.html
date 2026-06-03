@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Personas · As Ofertas Maternas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#fdf6f0; --card-grad-from:#fff5ee; --card-grad-to:#ffe6d5;
+    --accent:#d97a4f; --accent-dark:#c9501e; --dark:#3d2316; --soft:#5d4435; --muted:#a06a45;
+    --light-bg:#fdf6f0; --tag-bg:#fdebdf; --lead-grad-from:#fff0e3; --lead-grad-to:#ffe2c8;
+    --border-soft:#f5e8df; --photo-bg:#f0d4bc;
+  }
+  .theme-ana{--bg:#fdf6f0;--card-grad-from:#fff5ee;--card-grad-to:#ffe6d5;--accent:#d97a4f;--accent-dark:#c9501e;--dark:#3d2316;--soft:#5d4435;--muted:#a06a45;--light-bg:#fdf6f0;--tag-bg:#fdebdf;--lead-grad-from:#fff0e3;--lead-grad-to:#ffe2c8;--border-soft:#f5e8df;--photo-bg:#f0d4bc}
+  .theme-amanda{--bg:#f5f0f7;--card-grad-from:#f8f1f7;--card-grad-to:#e5d4ec;--accent:#9b6fa1;--accent-dark:#6e4f78;--dark:#3a2845;--soft:#5c4368;--muted:#7d5e8a;--light-bg:#f6f0f8;--tag-bg:#ece0ef;--lead-grad-from:#f1e6f3;--lead-grad-to:#dfc5e8;--border-soft:#ecdfee;--photo-bg:#d4bcd9}
+
+  body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:#2d2d2d;line-height:1.6;padding:24px;transition:background .4s}
+  .container{max-width:1100px;margin:0 auto}
+
+  .tabbar{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px;background:#fff;padding:10px;border-radius:18px;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+  .tab{padding:18px 22px;border-radius:12px;cursor:pointer;display:flex;align-items:center;gap:16px;transition:all .25s;border:2px solid transparent;background:transparent;font-family:inherit;text-align:left}
+  .tab:hover{background:#fafafa}
+  .tab.active{background:var(--tag-bg);border-color:var(--accent)}
+  .tab img{width:54px;height:54px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+  .tab-text{line-height:1.3}
+  .tab-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--dark);display:block}
+  .tab-sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:2px;display:block}
+  .tab.active .tab-name{color:var(--accent-dark)}
+
+  .header-card{background:linear-gradient(135deg,var(--card-grad-from) 0%,var(--card-grad-to) 100%);border-radius:24px;padding:0;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.08);display:grid;grid-template-columns:380px 1fr;margin-bottom:32px;transition:background .4s}
+  .photo-wrap{position:relative;background:var(--photo-bg)}
+  .photo-wrap img{width:100%;height:100%;object-fit:cover;display:block;min-height:520px}
+  .photo-ana{object-position:60% 35%!important}
+  .photo-amanda{object-position:55% 25%!important}
+  .header-info{padding:50px 48px;display:flex;flex-direction:column;justify-content:center}
+  .label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:12px}
+  .name{font-family:'Playfair Display',serif;font-size:64px;font-weight:800;color:var(--dark);line-height:1;margin-bottom:8px;letter-spacing:-1.5px}
+  .age-tag{display:inline-block;background:var(--dark);color:#fff;padding:4px 14px;border-radius:20px;font-size:14px;font-weight:600;margin-bottom:24px;width:fit-content}
+  .tagline{font-size:20px;color:var(--soft);font-style:italic;line-height:1.5;margin-bottom:32px;font-weight:500}
+  .quick-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:auto}
+  .stat{background:rgba(255,255,255,.6);padding:14px 18px;border-radius:14px;border-left:3px solid var(--accent)}
+  .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:4px}
+  .stat-val{font-size:15px;font-weight:600;color:var(--dark)}
+
+  section{background:#fff;border-radius:20px;padding:36px 40px;margin-bottom:24px;box-shadow:0 6px 24px rgba(0,0,0,.04)}
+  h2{font-family:'Playfair Display',serif;font-size:30px;color:var(--dark);margin-bottom:8px;font-weight:700;display:flex;align-items:center;gap:14px}
+  h2 .icon{font-size:32px}
+  h2 .num{font-family:'Inter',sans-serif;color:var(--accent);font-size:14px;background:var(--tag-bg);padding:4px 10px;border-radius:8px;font-weight:700;margin-left:auto}
+  .section-sub{color:var(--muted);font-size:14px;margin-bottom:24px;font-style:italic}
+  h3{font-size:17px;color:var(--soft);margin:20px 0 12px;font-weight:600}
+
+  ul.clean{list-style:none}
+  ul.clean li{padding:10px 0;border-bottom:1px solid var(--border-soft);display:flex;gap:12px;align-items:flex-start}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:'';flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:9px}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .grid-2 > div{background:var(--light-bg);padding:22px 26px;border-radius:14px}
+  .grid-2 h3{margin-top:0}
+
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px;margin-top:20px}
+  .cat-card{background:var(--light-bg);border-radius:14px;padding:22px;border-top:4px solid var(--accent);transition:transform .15s}
+  .cat-card:hover{transform:translateY(-2px)}
+  .cat-card.lead{border-top-color:var(--accent-dark);background:linear-gradient(135deg,var(--lead-grad-from),var(--lead-grad-to))}
+  .cat-card h4{font-family:'Playfair Display',serif;font-size:19px;color:var(--dark);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .cat-card ul{margin:0;padding:0;list-style:none;font-size:13px;color:var(--soft);line-height:1.7}
+  .cat-card ul li::before{content:'•';color:var(--accent);margin-right:8px;font-weight:bold}
+
+  .footer-note{text-align:center;color:var(--muted);font-size:13px;margin-top:32px;padding:20px}
+
+  .persona-content{display:none;animation:fadeIn .35s ease}
+  .persona-content.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+  @media(max-width:900px){
+    .header-card{grid-template-columns:1fr}
+    .photo-wrap img{min-height:340px}
+    .header-info{padding:32px}
+    .name{font-size:48px}
+    .grid-2{grid-template-columns:1fr}
+    section{padding:24px}
+    .tabbar{grid-template-columns:1fr}
+    .tab-name{font-size:18px}
+  }
+</style>
+</head>
+<body class="theme-amanda">
+<div class="container">
+
+  <!-- TAB BAR -->
+  <div class="tabbar">
+    <button class="tab active" data-persona="amanda">
+      <img src="https://images.pexels.com/photos/7282422/pexels-photo-7282422.jpeg?auto=compress&cs=tinysrgb&w=200&fit=crop" alt="Amanda">
+      <div class="tab-text">
+        <span class="tab-sub">Persona</span>
+        <span class="tab-name">Amanda · Gestante</span>
+      </div>
+    </button>
+    <button class="tab" data-persona="ana">
+      <img src="https://images.pexels.com/photos/3875221/pexels-photo-3875221.jpeg?auto=compress&cs=tinysrgb&w=200&fit=crop" alt="Ana">
+      <div class="tab-text">
+        <span class="tab-sub">Persona</span>
+        <span class="tab-name">Ana · Pós-parto</span>
+      </div>
+    </button>
+  </div>
+
+  <!-- ============== PERSONA AMANDA ============== -->
+  <div class="persona-content active theme-amanda" id="persona-amanda">
+
+    <div class="header-card">
+      <div class="photo-wrap">
+        <img class="photo-amanda" src="https://images.pexels.com/photos/7282422/pexels-photo-7282422.jpeg?auto=compress&cs=tinysrgb&w=900&fit=crop" alt="Amanda — gestante montando o enxoval do bebê no quartinho">
+      </div>
+      <div class="header-info">
+        <div class="label">Persona · As Ofertas Maternas</div>
+        <h1 class="name">Amanda</h1>
+        <span class="age-tag">30 anos · Gestante montando o enxoval</span>
+        <p class="tagline">"Quero fazer tudo bem feito antes do bebê chegar — listas, marcas, melhores preços. Esse é o meu projeto agora."</p>
+        <div class="quick-stats">
+          <div class="stat"><div class="stat-label">Faixa etária</div><div class="stat-val">27–33 anos</div></div>
+          <div class="stat"><div class="stat-label">Momento</div><div class="stat-val">1ª gestação · até 2º trimestre</div></div>
+          <div class="stat"><div class="stat-label">Situação</div><div class="stat-val">Ainda trabalhando</div></div>
+          <div class="stat"><div class="stat-label">Renda familiar</div><div class="stat-val">R$ 4–12k / mês</div></div>
+          <div class="stat"><div class="stat-label">Localização</div><div class="stat-val">Capital ou cidade média</div></div>
+          <div class="stat"><div class="stat-label">Classe</div><div class="stat-val">B / C</div></div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2><span class="icon">🌿</span>Contexto de vida</h2>
+      <p class="section-sub">Em modo preparação — vida do trabalho, planejamento do enxoval e descoberta da maternidade caminhando lado a lado.</p>
+      <ul class="clean">
+        <li><b>Modo "preparação"</b> — quer fazer tudo bem feito antes do bebê chegar. Lista de enxoval, marcas, melhores preços.</li>
+        <li><b>Ainda trabalhando</b> — rotina cheia, intervalos curtos. Vai entrar de licença daqui a alguns meses.</li>
+        <li><b>Pesquisa muito por item</b> — é a primeira vez, então cada produto é decisão importante (qual fralda, qual mamadeira, qual carrinho).</li>
+        <li><b>Compra ao longo de meses</b> — divide o enxoval em fases pra organizar o orçamento e o espaço.</li>
+        <li><b>Cuida da gestação com carinho</b> — começa a usar creme anti-estria, hidratante corporal, lingerie confortável.</li>
+        <li><b>Acompanha grupos de gestantes</b> da mesma fase + amigas que já tiveram bebê recente.</li>
+        <li><b>Usa o celular em janelas curtas</b> — pausa do trabalho, almoço, à noite no sofá, fim de semana.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="icon">💛</span>O que ela quer</h2>
+      <p class="section-sub">Sentimentos e necessidades que orientam o que ela compra agora.</p>
+      <div class="grid-2">
+        <div>
+          <h3>Pra ela (gestante)</h3>
+          <ul class="clean">
+            <li>Hidratar bem o corpo (anti-estria, óleo, hidratante)</li>
+            <li>Lingerie e roupa confortável que se adapta à barriga</li>
+            <li>Cuidar do cabelo, pele e bem-estar geral</li>
+            <li>Sentir-se bonita e confiante mesmo com o corpo mudando</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Pra o bebê (enxoval)</h3>
+          <ul class="clean">
+            <li>Lista de enxoval completa, em fases</li>
+            <li>Marca confiável recomendada por outras mães</li>
+            <li>Combos e kits — economiza e resolve várias necessidades</li>
+            <li>Itens que vão servir nos primeiros 6 meses</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="icon">🛒</span>Categorias de produto<span class="num">10 pilares</span></h2>
+      <p class="section-sub">O que a Amanda busca durante a gestação. Cards em destaque são os pilares mais ativos nessa fase de preparação.</p>
+      <div class="cat-grid">
+
+        <div class="cat-card lead">
+          <h4>👶 Enxoval — roupa do bebê</h4>
+          <ul>
+            <li><strong>Pilar principal nesse momento</strong></li>
+            <li>Kit body manga longa + manga curta RN/P</li>
+            <li>Kit mijão / calça bebê</li>
+            <li>Macacão soft / plush</li>
+            <li>Macaquinho de saída maternidade</li>
+            <li>Meias / kit touca-luva RN</li>
+            <li>Pano de boca</li>
+            <li>Cueiro</li>
+            <li>Manta de saída de maternidade</li>
+            <li>Capa de bebê conforto</li>
+          </ul>
+        </div>
+
+        <div class="cat-card lead">
+          <h4>🍼 Estoque de higiene do bebê</h4>
+          <ul>
+            <li><strong>Começa a estocar agora</strong></li>
+            <li>Fralda RN + P (pacote grande / atacado)</li>
+            <li>Lenço umedecido (caixa, kit Huggies/Pampers)</li>
+            <li>Algodão grande (rolo)</li>
+            <li>Sabonete líquido bebê (Granado, Johnson, Mustela)</li>
+            <li>Pomada de assadura (Hipoglos, Mustela 1 2 3)</li>
+            <li>Sabão pra roupinha (Ola Bebê, Tixan Ypê)</li>
+            <li>Amaciante delicado para roupa de bebê</li>
+          </ul>
+        </div>
+
+        <div class="cat-card lead">
+          <h4>💆‍♀️ Cuidados da gestante</h4>
+          <ul>
+            <li><strong>Pilar dela nessa fase</strong></li>
+            <li>Creme anti-estria (Bio-oil, Palmer's, Cicatricure)</li>
+            <li>Óleo de amêndoas / óleo corporal</li>
+            <li>Hidratante corporal (Nivea, Cetaphil, Vasenol)</li>
+            <li>Hidratante facial leve</li>
+            <li>Hidratante labial premium</li>
+            <li>Shampoo anti-queda preventivo</li>
+            <li>Sutiã gestante sem aro</li>
+            <li>Calça / legging gestante</li>
+            <li>Camisola e pijama maternidade</li>
+            <li>Vitamina pra cabelo</li>
+            <li>Kit higiene íntima</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>🛏️ Quarto e sono do bebê</h4>
+          <ul>
+            <li>Jogo de lençol de berço</li>
+            <li>Cobertor / manta plush</li>
+            <li>Mosquiteiro de berço</li>
+            <li>Ninho redutor de berço</li>
+            <li>Travesseirinho anti-cabeça-chata</li>
+            <li>Travesseiro anti-refluxo</li>
+            <li>Mobile musical de berço</li>
+            <li>Máquina de ruído branco / projetor de estrelas</li>
+            <li>Saco de dormir / casulo</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>🛁 Banho do bebê</h4>
+          <ul>
+            <li>Banheira (rede, dobrável, plástica)</li>
+            <li>Suporte de banheira / rede</li>
+            <li>Toalha com capuz (kit 2-3)</li>
+            <li>Termômetro de banheira</li>
+            <li>Pente / escovinha bebê</li>
+            <li>Roupão bebê</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>🤱 Amamentação (compra antecipada)</h4>
+          <ul>
+            <li>Sutiã amamentação confortável</li>
+            <li>Almofada de amamentação tipo U</li>
+            <li>Concha de amamentação</li>
+            <li>Protetor de mamilo silicone</li>
+            <li>Pomada Lansinoh / Bepantol</li>
+            <li>Bomba tira-leite manual / elétrica</li>
+            <li>Saquinho para armazenar leite</li>
+            <li>Esterilizador de mamadeira</li>
+            <li>Aquecedor de mamadeira</li>
+            <li>Absorvente para seio</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>🏃‍♀️ Para sair de casa</h4>
+          <ul>
+            <li>Bolsa maternidade</li>
+            <li>Saquinhos organizadores da maternidade</li>
+            <li>Trocador portátil dobrável</li>
+            <li>Canguru / wrap sling</li>
+            <li>Mosquiteiro pra carrinho</li>
+            <li>Cadeirinha de carro / bebê conforto</li>
+            <li>Protetor de banco de carro</li>
+            <li>Protetor blackout vidro</li>
+            <li>Chapéu de sol e óculos UV bebê</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>🌡️ Saúde e segurança do bebê</h4>
+          <ul>
+            <li>Termômetro infravermelho sem contato</li>
+            <li>Aspirador nasal elétrico</li>
+            <li>Xô Febre</li>
+            <li>Babá eletrônica (Motorola, VTech)</li>
+            <li>Suporte para babá eletrônica</li>
+            <li>Lixa elétrica de unha de bebê</li>
+            <li>Lixeira mágica de fraldas</li>
+            <li>Protetor de tomada</li>
+            <li>Trava de porta / segurança</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>📦 Organização do enxoval</h4>
+          <ul>
+            <li>Saquinhos organizadores de maternidade (etiquetados)</li>
+            <li>Cabide infantil</li>
+            <li>Colméia / divisor de gaveta</li>
+            <li>Cesto organizador de brinquedo</li>
+            <li>Cesto organizador de roupa</li>
+            <li>Caixas organizadoras transparentes</li>
+            <li>Lixeira de pedal</li>
+            <li>Sacos a vácuo pra armazenar roupa</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>📚 Leitura e enxoval afetivo</h4>
+          <ul>
+            <li>Livros sobre gestação e parto</li>
+            <li>Livros sobre amamentação e BLW</li>
+            <li>Caderno de planejamento da maternidade</li>
+            <li>Álbum do primeiro ano</li>
+            <li>Caixa lembrança maternidade</li>
+            <li>Livros de estímulo preto/branco (já compra pra ter)</li>
+            <li>Livros texturas / livro de banho</li>
+            <li>Carta pra o bebê</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- ============== PERSONA ANA ============== -->
+  <div class="persona-content theme-ana" id="persona-ana">
+
+    <div class="header-card">
+      <div class="photo-wrap">
+        <img class="photo-ana" src="https://images.pexels.com/photos/3875221/pexels-photo-3875221.jpeg?auto=compress&cs=tinysrgb&w=900&fit=crop" alt="Ana — mãe de primeira viagem em casa com bebê de 3 meses">
+      </div>
+      <div class="header-info">
+        <div class="label">Persona · As Ofertas Maternas</div>
+        <h1 class="name">Ana</h1>
+        <span class="age-tag">30 anos · Mãe de primeira viagem</span>
+        <p class="tagline">"Estou aprendendo um milhão de coisas novas, e adoro descobrir produtos que outras mães já amaram."</p>
+        <div class="quick-stats">
+          <div class="stat"><div class="stat-label">Faixa etária</div><div class="stat-val">27–33 anos</div></div>
+          <div class="stat"><div class="stat-label">Filho</div><div class="stat-val">1 bebê · 0–6 meses</div></div>
+          <div class="stat"><div class="stat-label">Situação</div><div class="stat-val">Licença maternidade</div></div>
+          <div class="stat"><div class="stat-label">Renda familiar</div><div class="stat-val">R$ 4–12k / mês</div></div>
+          <div class="stat"><div class="stat-label">Localização</div><div class="stat-val">Capital ou cidade média</div></div>
+          <div class="stat"><div class="stat-label">Classe</div><div class="stat-val">B / C</div></div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2><span class="icon">🌿</span>Contexto de vida</h2>
+      <p class="section-sub">Fase nova, ritmo novo — vida em casa com o bebê, e ela aproveita pra descobrir, conectar, cuidar.</p>
+      <ul class="clean">
+        <li><b>Vida nova, ritmo novo</b> — tem mais tempo em casa do que tinha antes, e usa esse tempo pra descobrir coisas novas.</li>
+        <li><b>Conectada o dia inteiro</b> — celular ao lado, pesquisa de tudo: receita, opinião de outras mães, melhor preço.</li>
+        <li><b>Curiosa e aprendendo</b> — primeira viagem, então tudo é novidade. Pergunta, pesquisa, testa.</li>
+        <li><b>Quer fazer "bem feito"</b> — escolhe produto bom, marca conhecida, recomendação de alguém que já usou.</li>
+        <li><b>Aproveita a fase pra se cuidar mais</b> — agora tem janela pra usar máscara facial, fazer skincare, pintar a unha.</li>
+        <li><b>Gosta de ter a casa funcionando</b> — descobre produtos práticos que economizam tempo (e conta orgulhosa pras amigas).</li>
+        <li><b>Tempo de tela alto</b> — abre os grupos várias vezes ao dia, principalmente no soninho do bebê e na amamentação.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="icon">💛</span>O que ela quer</h2>
+      <p class="section-sub">Sentimentos e necessidades que orientam o que ela compra.</p>
+      <div class="grid-2">
+        <div>
+          <h3>Pra ela</h3>
+          <ul class="clean">
+            <li>Sentir-se bem cuidada — cabelo bonito, pele hidratada</li>
+            <li>Lingerie confortável que cabe no corpo de agora</li>
+            <li>Pequenos rituais de autocuidado (skincare, unha)</li>
+            <li>Sentir que ainda é "ela" além de ser mãe</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Pra casa e bebê</h3>
+          <ul class="clean">
+            <li>Casa funcionando suave, sem virar projeto</li>
+            <li>Bebê dormindo bem e confortável</li>
+            <li>Amamentação resolvida (pomadas, conchas, sutiãs)</li>
+            <li>Achados que outras mães ainda não conhecem</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="icon">🛒</span>Categorias de produto<span class="num">12 pilares</span></h2>
+      <p class="section-sub">O que a Ana busca, do que mais vende ao que tem maior potencial de descoberta. Cards em destaque são os carros-chefe atuais segundo os dados de venda.</p>
+      <div class="cat-grid">
+
+        <div class="cat-card lead">
+          <h4>🍼 Fraldas</h4>
+          <ul>
+            <li><strong>Carro-chefe</strong> — a categoria que mais vende</li>
+            <li>Fralda RN, P, M, G, XG, XXG (Pampers, Huggies, Supreme Care)</li>
+            <li>Pacotão promocional (kit 100+ unidades)</li>
+            <li>Fralda noturna ultra-absorvente</li>
+            <li>Fralda piscina / fralda treino</li>
+            <li>Calça de fralda noturna</li>
+            <li>Pacote do mês com cupom maior</li>
+          </ul>
+        </div>
+
+        <div class="cat-card lead">
+          <h4>🧴 Higiene do bebê</h4>
+          <ul>
+            <li><strong>Lenço umedecido</strong> (Huggies, Pampers — campeão de vendas)</li>
+            <li>Algodão (rolo grande, Cottonbaby)</li>
+            <li>Sabonete líquido (Granado, Johnson, Mustela)</li>
+            <li>Pomada de assadura (Hipoglos, Mustela 1 2 3)</li>
+            <li>Cotonete / hastes flexíveis</li>
+            <li>Sabão para roupinha (Ola Bebê, Tixan Ypê)</li>
+            <li>Amaciante delicado para roupa de bebê</li>
+          </ul>
+        </div>
+
+        <div class="cat-card lead">
+          <h4>💧 Cuidados de pele do bebê</h4>
+          <ul>
+            <li>Mustela Gel Lavante</li>
+            <li>Mustela Creme Prevenção de Assaduras</li>
+            <li>Mustela Hidratante Stelatopia</li>
+            <li>Bepantol Baby</li>
+            <li>Weleda Calêndula</li>
+            <li>Hidratante corporal infantil</li>
+            <li>Óleo de banho / pós-banho</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>🤱 Amamentação</h4>
+          <ul>
+            <li>Concha de amamentação / coletor de leite</li>
+            <li>Protetor de mamilo de silicone</li>
+            <li>Pomada Lansinoh / Bepantol</li>
+            <li>Almofada de amamentação tipo U</li>
+            <li>Bomba tira-leite manual / elétrica</li>
+            <li>Saquinhos para armazenar leite</li>
+            <li>Esterilizador de mamadeira micro-ondas</li>
+            <li>Aquecedor de mamadeira</li>
+            <li>Absorvente para seio</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>😴 Sono e conforto do bebê</h4>
+          <ul>
+            <li>Ninho redutor de berço</li>
+            <li>Travesseiro anti-refluxo</li>
+            <li>Mosquiteiro de berço</li>
+            <li>Máquina de ruído branco / projetor estrelas</li>
+            <li>Mobile musical de berço</li>
+            <li>Cobertor sherpa / manta plush</li>
+            <li>Saco de dormir / casulo</li>
+            <li>Cadeira de descanso / bouncer</li>
+            <li>Travesseirinho anti-cabeça-chata</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>🎨 Estímulos, livros e brinquedos</h4>
+          <ul>
+            <li>Livros de alto contraste preto/branco</li>
+            <li>Livros com texturas / livro de banho</li>
+            <li>Cartões de estímulo Montessori</li>
+            <li>Mobile / chocalho de contraste</li>
+            <li>Tapete sensorial / atividade</li>
+            <li>Espelho infantil de berço</li>
+            <li>Mordedor de gengiva (silicone, refrigerante)</li>
+            <li>Brinquedo de pendurar no carrinho</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>👕 Roupa e enxoval do bebê</h4>
+          <ul>
+            <li>Bodies (kit manga longa / curta)</li>
+            <li>Macacão soft / plush</li>
+            <li>Meias / kit touca e luva</li>
+            <li>Calçado bebê (sapatinho, mocassim, tênis)</li>
+            <li>Babadores (kit pano e silicone)</li>
+            <li>Toalha com capuz</li>
+            <li>Cabide infantil</li>
+            <li>Cobertor / manta de saída</li>
+            <li>Cueiro</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>🍴 Alimentação inicial</h4>
+          <ul>
+            <li>Mamadeira (Philips Avent, Nuk)</li>
+            <li>Copo de transição (Munchkin, com canudo)</li>
+            <li>Colher de silicone</li>
+            <li>Kit alimentação (prato, tigela, copo)</li>
+            <li>Cadeira de refeição portátil / com presilha</li>
+            <li>Babador silicone com bandeja</li>
+            <li>Porta-papinha térmico</li>
+            <li>Cooker / multi-processador bebê</li>
+            <li>Saquinho de comida congelada</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>🏃‍♀️ Para sair de casa</h4>
+          <ul>
+            <li>Canguru / wrap sling</li>
+            <li>Bolsa maternidade</li>
+            <li>Saquinhos organizadores da maternidade</li>
+            <li>Trocador portátil dobrável</li>
+            <li>Protetor solar bebê (Mustela, Banana Boat)</li>
+            <li>Mosquiteiro pra carrinho</li>
+            <li>Protetor de carro (banco, blackout vidro)</li>
+            <li>Chapéu de sol e óculos UV bebê</li>
+            <li>Manta leve de passeio</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>🌡️ Saúde e tech do bebê</h4>
+          <ul>
+            <li>Termômetro infravermelho sem contato</li>
+            <li>Termômetro de banheira</li>
+            <li>Aspirador nasal elétrico (Nuk, Multilaser)</li>
+            <li>Xô Febre</li>
+            <li>Balança digital pediátrica</li>
+            <li>Babá eletrônica (Motorola, VTech, contratipo)</li>
+            <li>Suporte para babá eletrônica</li>
+            <li>Lixa elétrica de unha de bebê</li>
+            <li>Lixeira mágica de fraldas</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>💄 Cuidados dela</h4>
+          <ul>
+            <li>Shampoo (Tio Nacho, Salon Line, Inoar)</li>
+            <li>Hidratante corporal (Nivea, Cetaphil)</li>
+            <li>Creme anti-estria (Bio-oil, Palmer's)</li>
+            <li>Skincare básico — sérum, hidratante facial</li>
+            <li>Hidratante labial premium</li>
+            <li>Vitamina pra cabelo</li>
+            <li>Sutiã sem aro / amamentação confortável</li>
+            <li>Calcinha pós-parto cintura alta</li>
+            <li>Legging confortável de casa</li>
+            <li>Esmaltinho da semana</li>
+            <li>Kit higiene íntima</li>
+          </ul>
+        </div>
+
+        <div class="cat-card">
+          <h4>✨ Casa, limpeza e achadinhos</h4>
+          <ul>
+            <li><strong>Percarbonato de sódio</strong> (estrela)</li>
+            <li>Vassoura mágica · Mop japonês</li>
+            <li>Pano electrostático tipo Swiffer</li>
+            <li>Esponja microfibra reutilizável</li>
+            <li>Tira-manchas premium (Vanish Oxi, OxyClean)</li>
+            <li>Limpa-juntas em gel · Removedor de mofo</li>
+            <li>Air fryer (Mondial, Britânia, Oster)</li>
+            <li>Panela elétrica de pressão multifuncional</li>
+            <li>Organizadores de gaveta, colméia, potes herméticos</li>
+            <li>Garrafa térmica grande (Stanley contratipo)</li>
+            <li>Coisinhas Shopee (organizador cabo, suporte tampa)</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="footer-note">
+    Personas criadas com base na análise de vendas Março–Maio 2026 · As Ofertas Maternas
+  </div>
+
+</div>
+
+<script>
+function applyTheme(persona) {
+  document.body.classList.remove('theme-amanda','theme-ana');
+  document.body.classList.add('theme-' + persona);
+}
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const persona = tab.dataset.persona;
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t === tab));
+    document.querySelectorAll('.persona-content').forEach(c => {
+      c.classList.toggle('active', c.id === 'persona-' + persona);
+    });
+    applyTheme(persona);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+});
+</script>
+</body>
+</html>
